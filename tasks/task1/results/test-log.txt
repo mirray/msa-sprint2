@@ -1,0 +1,55 @@
+hotelio-tester  | 🏁 Регрессионный тест до миграции Hotelio
+hotelio-tester  | 🧪 Проверка подключения к БД...
+hotelio-tester  | 🧪 Загрузка фикстур...
+hotelio-tester  | DELETE 0
+hotelio-tester  | DELETE 0
+hotelio-tester  | DELETE 0
+hotelio-tester  | DELETE 0
+hotelio-tester  | DELETE 0
+hotelio-tester  | INSERT 0 4
+hotelio-tester  | INSERT 0 3
+hotelio-tester  | INSERT 0 12
+hotelio-tester  | INSERT 0 3
+hotelio-tester  | INSERT 0 2
+hotelio-tester  | 🧪 Выполнение HTTP-тестов...
+hotelio-tester  | 
+hotelio-tester  | Тесты пользователей...
+hotelio-tester  | ✅ Получение test-user-1 по ID работает
+hotelio-tester  | ✅ Статус test-user-1: ACTIVE
+hotelio-tester  | ✅ test-user-1 в блэклисте
+hotelio-tester  | ✅ test-user-1 активен
+hotelio-tester  | ✅ test-user-1 не авторизован (в блэклисте)
+hotelio-tester  | ✅ test-user-3 — VIP-пользователь
+hotelio-tester  | ✅ test-user-2 авторизован
+hotelio-tester  | 
+hotelio-tester  | Тесты отелей...
+hotelio-tester  | ✅ test-hotel-1 получен по ID
+hotelio-tester  | ✅ test-hotel-1 работает
+hotelio-tester  | ✅ test-hotel-3 не работает
+hotelio-tester  | ✅ test-hotel-2 полностью забронирован
+hotelio-tester  | ✅ Поиск отелей в Сеуле работает
+hotelio-tester  | ✅ Топ-отели в Сеуле загружены
+hotelio-tester  | 
+hotelio-tester  | Тесты ревью...
+hotelio-tester  | ✅ Отзывы test-hotel-1 найдены
+hotelio-tester  | ✅ test-hotel-1 признан надёжным
+hotelio-tester  | ✅ test-hotel-3 НЕ признан надёжным (ожидаемо)
+hotelio-tester  | 
+hotelio-tester  | Тесты промокодов...
+hotelio-tester  | ✅ Промокод TESTCODE1 найден
+hotelio-tester  | ✅ VIP-промо доступен VIP
+hotelio-tester  | ✅ VIP-промо недоступен обычному
+hotelio-tester  | ✅ Обычный промо доступен
+hotelio-tester  | ✅ Истекший промо недоступен
+hotelio-tester  | ✅ POST /validate промо прошёл
+hotelio-tester  | 
+hotelio-tester  | Тесты бронирования...
+hotelio-tester  | ✅ Все бронирования получены
+hotelio-tester  | ✅ Бронирования test-user-2 найдены
+hotelio-tester  | ✅ Бронирование прошло (без промо)
+hotelio-tester  | ✅ Бронирование с промо прошло
+hotelio-tester  | ✅ Отклонено: неактивный пользователь
+hotelio-tester  | ✅ Отклонено: недоверенный отель
+hotelio-tester  | ✅ Отклонено: отель полностью забронирован
+hotelio-tester  | ✅ Все HTTP-тесты пройдены!
+hotelio-tester exited with code 0 

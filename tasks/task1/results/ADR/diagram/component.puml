@@ -1,0 +1,56 @@
+@startuml Hotelio_Components_Desired
+!include <C4/C4_Component>
+
+Person(app, "User", "Interacts with frontend")
+
+System_Boundary(hm, "Hotelio"){
+    Container_Boundary(hm.booking, "Booking Context"){
+        Component(hm.booking.c, "Booking Controller")
+        Component(hm.booking.s, "Booking Service")
+        ComponentDb(hm.booking.db, "Booking Data Base")
+        BiRel(hm.booking.c, hm.booking.s, "")
+        BiRel(hm.booking.s, hm.booking.db, "")
+    }
+    Container_Boundary(hm.review, "Review Context"){
+        Component(hm.review.c, "Review Controller")
+        Component(hm.review.s, "Review Service")
+        ComponentDb(hm.review.db, "Review Data Base")
+        BiRel(hm.review.c, hm.review.s, "")
+        BiRel(hm.review.s, hm.review.db, "")
+    }
+    Container_Boundary(hm.hotel, "Hotel Context"){
+        Component(hm.hotel.c, "Hotel Controller")
+        Component(hm.hotel.s, "Hotel Service")
+        ComponentDb(hm.hotel.db, "Hotel Data Base")
+        BiRel(hm.hotel.c, hm.hotel.s, "")
+        BiRel(hm.hotel.s, hm.hotel.db, "")
+    }    
+    Container_Boundary(hm.user, "App User Context"){
+        Component(hm.user.c, "App User Controller")
+        Component(hm.user.s, "App User Service")
+        ComponentDb(hm.user.db, "App User Data Base")
+        BiRel(hm.user.c, hm.user.s, "")
+        BiRel(hm.user.s, hm.user.db, "")
+    }    
+    Container_Boundary(hm.promo, "Promocode Context"){
+        Component(hm.promo.c, "Promocode Controller")
+        Component(hm.promo.s, "Promocode Service")
+        ComponentDb(hm.promo.db, "Promocode Data Base")
+        BiRel(hm.promo.c, hm.promo.s, "")
+        BiRel(hm.promo.s, hm.promo.db, "")
+    } 
+
+    Rel(hm.booking.s, hm.review.s, "")
+    Rel(hm.booking.s, hm.hotel.s, "")
+    Rel(hm.booking.s, hm.user.s, "")
+    Rel(hm.booking.s, hm.promo.s, "")
+    Rel(hm.promo.s, hm.user.s, "")
+
+    
+    Rel_D(app, hm.booking.c, "")
+    Rel_D(app, hm.review.c, "")
+    Rel_D(app, hm.hotel.c, "")
+    Rel_D(app, hm.user.c, "")
+    Rel_D(app, hm.promo.c, "")    
+}
+@enduml

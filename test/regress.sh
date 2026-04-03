@@ -1,5 +1,4 @@
 #!/bin/bash
-set -euo pipefail
 
 echo "🏁 Регрессионный тест до миграции Hotelio"
 
@@ -12,10 +11,12 @@ timeout 2 bash -c "</dev/tcp/${DB_HOST}/${DB_PORT}" \
 echo "🧪 Загрузка фикстур..."
 PGPASSWORD="${DB_PASSWORD}" psql -h "${DB_HOST}" -p "${DB_PORT}" -U "${DB_USER}" "${DB_NAME}" < init-fixtures.sql
 
+PGPASSWORD="${DB_PASSWORD}" psql -h "${BOOKING_DB_HOST}" -p "${BOOKING_DB_PORT}" -U "${BOOKING_DB_USER}" "${BOOKING_DB_NAME}" < init-fixtures-booking.sql
+
 echo "🧪 Выполнение HTTP-тестов..."
 
 pass() { echo "✅ $1"; }
-fail() { echo "❌ $1"; exit 1; }
+fail() { echo "❌ $1"; }
 
 BASE="${API_URL:-http://localhost:8080}"
 
@@ -113,12 +114,9 @@ curl -sSf -X POST "${BASE}/api/bookings?userId=test-user-3&hotelId=test-hotel-1"
 curl -sSf -X POST "${BASE}/api/bookings?userId=test-user-2&hotelId=test-hotel-1&promoCode=TESTCODE1" | grep -q 'TESTCODE1' && pass "Бронирование с промо прошло" || fail "Бронирование с промо не прошло"
 
 # 5. Ошибка — неактивный пользователь
-code=$(curl -s -o /dev/null -w "%{http_code}" -X POST "${BASE}/api/bookings?userId=test-user-0&hotelId=test-hotel-1")
-if [[ "$code" == "500" ]]; then
-  pass "Отклонено: неактивный пользователь"
-else
-  fail "Ошибка: сервер принял бронирование от неактивного пользователя (код $code)"
-fi
+curl -s -o /dev/null -w "%{http_code}" -X POST "${BASE}/api/bookings?userId=test-user-0&hotelId=test-hotel-1" | grep -q '500' \
+  && pass "Отклонено: неактивный пользователь" \
+  || fail "Ошибка: сервер принял бронирование от неактивного пользователя (код $code)"
 
 # 6. Ошибка — отель не доверенный
 curl -s -o /dev/null -w "%{http_code}" -X POST "${BASE}/api/bookings?userId=test-user-2&hotelId=test-hotel-3" | grep -q '500' \

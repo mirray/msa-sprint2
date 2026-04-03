@@ -1,0 +1,80 @@
+@startuml booking_Sequence
+!include <C4/C4_Sequence>
+
+System_Ext(app, "App")
+Component(hm.booking.c, "Booking Controller")
+Component(hm.booking.s, "Booking Service")
+
+Component(hm.user.s, "App User Service") 
+Component(hm.hotel.s, "Hotel Service")
+Component(hm.promo.s, "Promocode Service")
+Component(hm.review.s, "Review Service")
+
+
+== Get bookings ==
+Rel(app, hm.booking.c, "listBookings")
+Rel(hm.booking.c, hm.booking.s, "listAll")
+Rel(hm.booking.s, hm.booking.c, "Booking[]")
+Rel(hm.booking.c, app, "Booking[]")
+
+== Create booking ==
+
+Rel(app, hm.booking.c, "createBooking")
+Rel(hm.booking.c, hm.booking.s, "createBooking")
+alt User valid
+      ref over hm.booking.s, hm.user.s
+            ! multiple calls to db
+      end ref
+      Rel(hm.booking.s, hm.user.s, "isUserActive")
+      Rel(hm.user.s, hm.booking.s, "true")
+      Rel(hm.booking.s, hm.user.s, "isUserBlacklisted")
+      Rel(hm.user.s, hm.booking.s, "false")
+else User inactive
+      Rel(hm.booking.s, hm.user.s, "isUserActive")
+      Rel(hm.user.s, hm.booking.s, "false")
+      Rel(hm.booking.s, app, "exception")
+else User is blacklisted
+      Rel(hm.booking.s, hm.user.s, "isUserActive")
+      Rel(hm.user.s, hm.booking.s, "true")
+      Rel(hm.booking.s, hm.user.s, "isUserBlacklisted")
+      Rel(hm.user.s, hm.booking.s, "true")
+      Rel(hm.booking.s, app, "exception")
+end
+
+
+alt Hotel valid
+      ref over hm.booking.s, hm.hotel.s
+            ! multiple calls to db
+      end ref
+      Rel(hm.booking.s, hm.hotel.s, "isHotelOperational")
+      Rel(hm.hotel.s, hm.booking.s, "true")
+      Rel(hm.booking.s, hm.hotel.s, "isTrustedHotel")
+      Rel(hm.hotel.s, hm.booking.s, "true")
+      Rel(hm.booking.s, hm.hotel.s, "isHotelFullyBooked")
+      Rel(hm.hotel.s, hm.booking.s, "false")
+else Hotel is not operational
+      Rel(hm.booking.s, hm.hotel.s, "isHotelOperational")
+      Rel(hm.hotel.s, hm.booking.s, "false")
+      Rel(hm.booking.s, app, "exception")
+else Hotel is not trusted
+      Rel(hm.booking.s, hm.hotel.s, "isHotelOperational")
+      Rel(hm.hotel.s, hm.booking.s, "true")
+      Rel(hm.booking.s, hm.hotel.s, "isTrustedHotel")
+      Rel(hm.hotel.s, hm.booking.s, "false")
+      Rel(hm.booking.s, app, "exception")
+else Hotel is fully booked
+      Rel(hm.booking.s, hm.hotel.s, "isHotelOperational")
+      Rel(hm.hotel.s, hm.booking.s, "true")
+      Rel(hm.booking.s, hm.hotel.s, "isTrustedHotel")
+      Rel(hm.hotel.s, hm.booking.s, "true")
+      Rel(hm.booking.s, hm.hotel.s, "isHotelFullyBooked")
+      Rel(hm.hotel.s, hm.booking.s, "true")
+      Rel(hm.booking.s, app, "exception")
+end
+
+Rel(hm.booking.s, hm.user.s, "getUserStatus")
+Rel(hm.user.s, hm.booking.s, "string")
+Rel(hm.booking.s, hm.promo.s, "validate")
+Rel(hm.promo.s, hm.booking.s, "PromoCode")
+Rel(hm.booking.s, app, "Booking")
+@enduml

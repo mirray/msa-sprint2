@@ -9,8 +9,10 @@ RUN apt-get update && apt-get install -y \
     bash \
     && rm -rf /var/lib/apt/lists/*
 
+USER root
 COPY wait-for-it.sh /usr/local/bin/wait-for-it
-COPY init-fixtures.sql regress.sh ./
-RUN chmod +x /usr/local/bin/wait-for-it regress.sh
-
-ENTRYPOINT ["./regress.sh"]
+COPY init-fixtures.sql .
+COPY regress.sh .
+RUN chmod +x /usr/local/bin/wait-for-it
+RUN chmod +x regress.sh
+CMD ["sh","regress.sh"]
