@@ -128,3 +128,13 @@ curl -s -o /dev/null -w "%{http_code}" -X POST "${BASE}/api/bookings?userId=test
   && pass "Отклонено: отель полностью забронирован" \
   || fail "Ошибка: сервер принял бронирование в полностью занятом отеле"
 echo "✅ Все HTTP-тесты пройдены!"
+
+echo "Selects from Bookings"
+echo "From monolith"
+PGPASSWORD="${DB_PASSWORD}" psql -h "${DB_HOST}" -p "${DB_PORT}" -U "${DB_USER}" "${DB_NAME}" < booking-requests.sql
+
+echo "From booking-service"
+PGPASSWORD="${BOOKING_DB_PASSWORD}" psql -h "${BOOKING_DB_HOST}" -p "${BOOKING_DB_PORT}" -U "${BOOKING_DB_USER}" "${BOOKING_DB_NAME}" < booking-requests.sql
+
+echo "From booking-history-service"
+PGPASSWORD="${BOOKING_HISTORY_DB_PASSWORD}" psql -h "${BOOKING_HISTORY_DB_HOST}" -p "${BOOKING_HISTORY_DB_PORT}" -U "${BOOKING_HISTORY_DB_USER}" "${BOOKING_HISTORY_DB_NAME}" < booking-history-requests.sql
