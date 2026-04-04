@@ -10,8 +10,8 @@ timeout 2 bash -c "</dev/tcp/${DB_HOST}/${DB_PORT}" \
 # Загрузка фикстур
 echo "🧪 Загрузка фикстур..."
 PGPASSWORD="${DB_PASSWORD}" psql -h "${DB_HOST}" -p "${DB_PORT}" -U "${DB_USER}" "${DB_NAME}" < init-fixtures.sql
-
-PGPASSWORD="${DB_PASSWORD}" psql -h "${BOOKING_DB_HOST}" -p "${BOOKING_DB_PORT}" -U "${BOOKING_DB_USER}" "${BOOKING_DB_NAME}" < init-fixtures-booking.sql
+echo "🧪 Загрузка фикстур (booking db)..."
+PGPASSWORD="${BOOKING_DB_PASSWORD}" psql -h "${BOOKING_DB_HOST}" -p "${BOOKING_DB_PORT}" -U "${BOOKING_DB_USER}" "${BOOKING_DB_NAME}" < init-fixtures-booking.sql
 
 echo "🧪 Выполнение HTTP-тестов..."
 
