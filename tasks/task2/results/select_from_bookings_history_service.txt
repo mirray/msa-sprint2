@@ -1,0 +1,7 @@
+ history_id |   user_id   |   hotel_id   | promo_code | discount_percent | price | created_at 
+
+------------+-------------+--------------+------------+------------------+-------+------------
+
+          7 | test-user-3 | test-hotel-1 |            |                0 |   100 | 2026-04-04
+
+          8 | test-user-2 | test-hotel-1 | TESTCODE1  |               10 |    70 | 2026-04-04
