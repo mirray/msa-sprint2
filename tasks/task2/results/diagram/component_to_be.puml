@@ -1,0 +1,75 @@
+@startuml component_to_be
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+
+
+
+System_Boundary(hotelio, "Hotelio Monolith") {
+
+  Container(monolith, "Monolith Application", "Spring Boot", "Legacy app exposing REST endpoints for hotel booking") {
+
+    ' Controllers
+    Component(bookingController, "BookingController", "Spring MVC", "/api/bookings")
+    Component(hotelController, "HotelController", "Spring MVC", "/api/hotels")
+    Component(promoController, "PromoCodeController", "Spring MVC", "/api/promos")
+    Component(reviewController, "ReviewController", "Spring MVC", "/api/reviews")
+    Component(userController, "UserController", "Spring MVC", "/api/users")
+  }
+}
+
+Person(user, "User", "Interacts with frontend")
+Rel(user, bookingController, "Uses")
+Rel(user, hotelController, "Uses")
+Rel(user, promoController, "Uses")
+Rel(user, reviewController, "Uses")
+Rel(user, userController, "Uses")
+
+System_Boundary(h.ms, "Hotelio Microservices"){
+  Container_Boundary(h.ms.b, "Booking context"){
+  ' Booking
+      Component(h.ms.b.booking_service, "Booking Service", "C# Service", "Validates and creates bookings")
+      ComponentDb(h.ms.b.db, "Booking DB", "PostgreSQL", "Stores bookings")
+      BiRel_D(h.ms.b.booking_service, h.ms.b.db, "Reads/Writes")
+  }
+  Container_Boundary(h.ms.a, "Analytical context"){
+  ' Booking
+      Component(h.ms.a.booking_history_service, "Booking History Service", "C# Service", "Collects bookings data")
+      ComponentDb(h.ms.a.db, "Analytical DB", "PostgreSQL", "Stores historical bookings data")
+      Rel_D(h.ms.a.booking_history_service, h.ms.a.db, "Writes")
+  }
+  Rel_R(h.ms.b.booking_service, h.ms.a.booking_history_service, "BookingCreated", "Kafka")
+
+
+
+  Container_Boundary(h.ms.r, "Review context"){
+        Component(h.ms.r.review_service, "Review Service", "C# Service", "Manages hotel reviews")
+        ComponentDb(h.ms.r.db, "Reviews DB", "PostgreSQL", "Stores reviews")
+        Rel_D(h.ms.r.review_service, h.ms.r.db, "Read")
+  }
+  Container_Boundary(h.ms.h, "Hotels context"){
+          Component(h.ms.h.hotels_service, "Hotels Service", "C# Service", "Retrieves hotel details")
+          ComponentDb(h.ms.h.db, "Hotels DB", "PostgreSQL", "Stores hotels")
+          Rel_D(h.ms.h.hotels_service, h.ms.h.db, "Read")
+  }
+  Container_Boundary(h.ms.p, "PromoCode context"){
+            Component(h.ms.p.promo_service, "Promocode Service", "C# Service", "Applies discounts and rules")
+            ComponentDb(h.ms.p.db, "Promo DB", "PostgreSQL", "Stores promos")
+            Rel_D(h.ms.p.promo_service, h.ms.p.db, "Read")
+    }
+  Container_Boundary(h.ms.u, "User context"){
+              Component(h.ms.u.user_service, "User Service", "C# Service", "Validates user status and blacklist")
+              ComponentDb(h.ms.u.db, "User DB", "PostgreSQL", "Stores users")
+              Rel_D(h.ms.u.user_service, h.ms.u.db, "Read")
+   } 
+    Rel_D(h.ms.b.booking_service, h.ms.u.user_service, "Validate", "gRPC")}    
+    Rel_R(h.ms.p.promo_service, h.ms.u.user_service, "Validate", "gRPC")
+    Rel_D(h.ms.b.booking_service, h.ms.p.promo_service, "Validate", "gRPC")} 
+    Rel_D(h.ms.b.booking_service, h.ms.h.hotels_service, "Validate", "gRPC")}       
+    Rel_D(h.ms.b.booking_service, h.ms.r.review_service, "Validate", "gRPC")} 
+        
+    Rel_D(bookingController, h.ms.b.booking_service, "call", "grpc")  
+    Rel_D(hotelController, h.ms.h.hotels_service, "call", "grpc")
+    Rel_D(reviewController, h.ms.r.review_service, "call", "grpc")
+    Rel_D(userController, h.ms.u.user_service, "call", "grpc")
+    Rel_D(promoController, h.ms.p.promo_service, "call", "grpc")   
+@enduml

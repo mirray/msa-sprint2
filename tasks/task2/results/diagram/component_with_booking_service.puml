@@ -1,4 +1,4 @@
-@startuml component_with_booking_service
+@startuml component_with_booking_service_to_be
 !include <C4/C4_Component>
 LAYOUT_WITH_LEGEND()
 
