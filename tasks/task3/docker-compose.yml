@@ -8,6 +8,7 @@ services:
     depends_on:
       - booking-subgraph
       - hotel-subgraph
+      - promocode-subgraph
     networks:
       - hotelio-net
 
@@ -22,6 +23,13 @@ services:
     build: ./hotel-subgraph
     ports:
       - "4002:4002"
+    networks:
+      - hotelio-net
+  
+  promocode-subgraph:
+    build: ./promocode-subgraph
+    ports:
+      - "4003:4003"
     networks:
       - hotelio-net
 

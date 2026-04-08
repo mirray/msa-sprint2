@@ -11,7 +11,8 @@ class AuthenticatedDataSource extends RemoteGraphQLDataSource {
 const gateway = new ApolloGateway({
   serviceList: [
     { name: 'booking', url: 'http://booking-subgraph:4001' },
-    { name: 'hotel', url: 'http://hotel-subgraph:4002' }
+    { name: 'hotel', url: 'http://hotel-subgraph:4002' },
+    { name: 'promo', url: 'http://promocode-subgraph:4003' }
   ],
  buildService({ name, url }) {
     return new AuthenticatedDataSource({ url });

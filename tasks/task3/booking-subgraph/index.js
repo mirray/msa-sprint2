@@ -45,11 +45,11 @@ const typeDefs = gql`
   type Booking @key(fields: "id") {
     id: ID!
     userId: String!
-    hotel: Hotel
+    hotel: Hotel!
     promoCode: String
-    discountPercent: Int
+    discountPercent: Int @shareable
   }
-  type Hotel @key(fields: "id") {
+  type Hotel @key(fields: "id") { 
     id: ID!
   }
   type Query {
