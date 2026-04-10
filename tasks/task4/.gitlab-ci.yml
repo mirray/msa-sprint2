@@ -1,23 +1,37 @@
+variables:
+  DOCKER_HOST: "unix:///var/run/docker.sock" # use local docker installation
+
 stages:
   - build
   - test
   - deploy
 
-variables:
-  IMAGE_TAG: latest
-  IMAGE_NAME: booking-service
-
 build:
   stage: build
   script:
-
-
-test:
-  stage: test
-  script:
-
+    - echo "Run build"
+    - docker build -f ./docker/booking-service-grpc/Dockerfile -t booking-service-grpc:1.0.0 .
 
 deploy:
   stage: deploy
   script:
+    - declare -x IMAGE_NAME=$IMAGE_NAME
+    - export
+    - echo $TEST_VAR
+    - echo "Start deploy $IMAGE_NAME:$IMAGE_TAG"
+
+test:
+  stage: test
+  variables:
+    POSTGRES_USER: hotelio
+    POSTGRES_PASSWORD: hotelio
+    POSTGRES_DB: db
+  script:
+    - echo "Start test"
+    - docker compose -f ./docker/compose.test.yml up -d
+    - curl "http://localhost:80/ping"
+    - docker stop booking-service-test
+    - docker stop booking-service-db-test
+    - docker rm booking-service-test
+    - docker rm booking-service-db-test
  

@@ -9,7 +9,7 @@ RUN apk add --no-cache curl
 WORKDIR /app
 
 # Копируем Go-файл и скрипт проверки DNS
-COPY main.go .
+COPY ./booking-service/main.go .
 COPY check-dns.sh .
 
 # TODO: Сделать скрипт исполняемым

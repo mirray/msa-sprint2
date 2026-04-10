@@ -1,1 +1,5 @@
 .gitlab-ci-local/
+.bin/
+*.dll
+*.dylib
+*.tgz
