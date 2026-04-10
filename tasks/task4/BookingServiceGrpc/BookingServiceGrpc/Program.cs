@@ -63,6 +63,7 @@ builder.Services.AddSingleton<Dictionary<Type, IQueryHandler>>(sp =>
 });
 builder.Services.AddSingleton<IRestQueryHandlerProvider, RestQueryHandlerProvider>();
 
+var featureX = bool.TryParse(Environment.GetEnvironmentVariable("ENABLE_FEATURE_X"), out var enableFeatureX) && enableFeatureX;
 
 var app = builder.Build();
 
@@ -75,4 +76,9 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 app.MapGet("/ping", () => "pong");
+if (featureX)
+{
+    app.MapGet("/feature", () => "Feature X is enabled!");
+}
+
 app.Run();

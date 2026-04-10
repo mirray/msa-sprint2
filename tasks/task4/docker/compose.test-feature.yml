@@ -1,0 +1,6 @@
+﻿services:
+  booking-service:
+    environment:
+      ENABLE_FEATURE_X: true
+  
+

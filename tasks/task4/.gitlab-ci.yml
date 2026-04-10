@@ -4,6 +4,7 @@ variables:
 stages:
   - build
   - test
+  - test-feature
   - deploy
 
 build:
@@ -29,9 +30,23 @@ test:
   script:
     - echo "Start test"
     - docker compose -f ./docker/compose.test.yml up -d
-    - curl "http://localhost:80/ping"
+    - curl "http://localhost/ping"
     - docker stop booking-service-test
     - docker stop booking-service-db-test
     - docker rm booking-service-test
     - docker rm booking-service-db-test
  
+test-feature:
+  stage: test-feature
+  variables:
+    POSTGRES_USER: hotelio
+    POSTGRES_PASSWORD: hotelio
+    POSTGRES_DB: db
+  script:
+    - echo "Start test"
+    - docker compose -f ./docker/compose.test.yml -f ./docker/compose.test-feature.yml up -d
+    - curl "http://localhost/feature"
+    - docker stop booking-service-test
+    - docker stop booking-service-db-test
+    - docker rm booking-service-test
+    - docker rm booking-service-db-test
