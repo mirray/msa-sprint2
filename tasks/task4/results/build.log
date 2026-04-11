@@ -1,0 +1,120 @@
+parsing and downloads finished in 300 ms.
+json schema validated in 279 ms
+build        starting shell (build)
+build        $ echo "Run build"
+build        > Run build
+build        $ docker build -f ./docker/booking-service-grpc/Dockerfile -t booking-service-grpc:1.0.0 .
+build        > #0 building with "default" instance using docker driver
+build        > 
+build        > #1 [internal] load build definition from Dockerfile
+build        > #1 transferring dockerfile: 898B 0.0s done
+build        > #1 DONE 0.1s
+build        > 
+build        > #2 [internal] load metadata for mcr.microsoft.com/dotnet/aspnet:10.0
+build        > #2 DONE 0.2s
+build        > 
+build        > #3 [internal] load metadata for mcr.microsoft.com/dotnet/sdk:10.0
+build        > #3 DONE 0.2s
+build        > 
+build        > #4 [internal] load .dockerignore
+build        > #4 transferring context: 2B 0.0s done
+build        > #4 DONE 0.1s
+build        > 
+build        > #5 [build 1/7] FROM mcr.microsoft.com/dotnet/sdk:10.0@sha256:478b9038d187e5b5c29bfa8173ded5d29e864b5ad06102a12106380ee01e2e49
+build        > #5 resolve mcr.microsoft.com/dotnet/sdk:10.0@sha256:478b9038d187e5b5c29bfa8173ded5d29e864b5ad06102a12106380ee01e2e49 0.1s done
+build        > #5 DONE 0.1s
+build        > 
+build        > #6 [base 1/2] FROM mcr.microsoft.com/dotnet/aspnet:10.0@sha256:a04d1c1d2d26119049494057d80ea6cda25bbd8aef7c444a1fc1ef874fd3955b
+build        > #6 resolve mcr.microsoft.com/dotnet/aspnet:10.0@sha256:a04d1c1d2d26119049494057d80ea6cda25bbd8aef7c444a1fc1ef874fd3955b 0.1s done
+build        > #6 DONE 0.1s
+build        > 
+build        > #7 [internal] load build context
+build        > #7 transferring context: 226.00MB 3.7s done
+build        > #7 DONE 3.8s
+build        > 
+build        > #8 [build 2/7] WORKDIR /src
+build        > #8 CACHED
+build        > 
+build        > #9 [build 3/7] COPY [../BookingServiceGrpc/BookingServiceGrpc/BookingServiceGrpc.csproj, BookingServiceGrpc/]
+build        > #9 CACHED
+build        > 
+build        > #10 [build 4/7] RUN dotnet restore "BookingServiceGrpc/BookingServiceGrpc.csproj"
+build        > #10 CACHED
+build        > 
+build        > #11 [build 5/7] COPY ../BookingServiceGrpc/ .
+build        > #11 DONE 2.4s
+build        > 
+build        > #12 [build 6/7] WORKDIR /src/BookingServiceGrpc
+build        > #12 DONE 0.2s
+build        > 
+build        > #13 [build 7/7] RUN dotnet build "./BookingServiceGrpc.csproj" -c Debug -o /app/build
+build        > #13 2.864   Determining projects to restore...
+build        > #13 4.781   Restored /src/BookingServiceGrpc/BookingServiceGrpc.csproj (in 1.37 sec).
+build        > #13 10.97 /src/BookingServiceGrpc/Commands/CreateBooking.cs(5,19): warning CS8618: Non-nullable property 'UserId' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [/src/BookingServiceGrpc/BookingServiceGrpc.csproj]
+build        > #13 10.97 /src/BookingServiceGrpc/Commands/CreateBooking.cs(6,19): warning CS8618: Non-nullable property 'HotelId' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [/src/BookingServiceGrpc/BookingServiceGrpc.csproj]
+build        > #13 10.97 /src/BookingServiceGrpc/Commands/CreateBooking.cs(7,19): warning CS8618: Non-nullable property 'PromoCode' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [/src/BookingServiceGrpc/BookingServiceGrpc.csproj]
+build        > #13 10.97 /src/BookingServiceGrpc/Producers/KafkaProducer.cs(11,74): warning CS9113: Parameter 'logger' is unread. [/src/BookingServiceGrpc/BookingServiceGrpc.csproj]
+build        > #13 10.97 /src/BookingServiceGrpc/Queries/ReviewService/IsTrustedHotel.cs(5,19): warning CS8618: Non-nullable property 'HotelId' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [/src/BookingServiceGrpc/BookingServiceGrpc.csproj]
+build        > #13 10.97 /src/BookingServiceGrpc/Services/BookingService.cs(81,33): warning CS0168: The variable '_' is declared but never used [/src/BookingServiceGrpc/BookingServiceGrpc.csproj]
+build        > #13 12.73   BookingServiceGrpc -> /app/build/BookingServiceGrpc.dll
+build        > #13 12.75 
+build        > #13 12.75 Build succeeded.
+build        > #13 12.75 
+build        > #13 12.75 /src/BookingServiceGrpc/Commands/CreateBooking.cs(5,19): warning CS8618: Non-nullable property 'UserId' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [/src/BookingServiceGrpc/BookingServiceGrpc.csproj]
+build        > #13 12.75 /src/BookingServiceGrpc/Commands/CreateBooking.cs(6,19): warning CS8618: Non-nullable property 'HotelId' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [/src/BookingServiceGrpc/BookingServiceGrpc.csproj]
+build        > #13 12.75 /src/BookingServiceGrpc/Commands/CreateBooking.cs(7,19): warning CS8618: Non-nullable property 'PromoCode' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [/src/BookingServiceGrpc/BookingServiceGrpc.csproj]
+build        > #13 12.75 /src/BookingServiceGrpc/Producers/KafkaProducer.cs(11,74): warning CS9113: Parameter 'logger' is unread. [/src/BookingServiceGrpc/BookingServiceGrpc.csproj]
+build        > #13 12.75 /src/BookingServiceGrpc/Queries/ReviewService/IsTrustedHotel.cs(5,19): warning CS8618: Non-nullable property 'HotelId' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable. [/src/BookingServiceGrpc/BookingServiceGrpc.csproj]
+build        > #13 12.75 /src/BookingServiceGrpc/Services/BookingService.cs(81,33): warning CS0168: The variable '_' is declared but never used [/src/BookingServiceGrpc/BookingServiceGrpc.csproj]
+build        > #13 12.75     6 Warning(s)
+build        > #13 12.75     0 Error(s)
+build        > #13 12.75 
+build        > #13 12.75 Time Elapsed 00:00:10.81
+build        > #13 DONE 12.9s
+build        > 
+build        > #14 [publish 1/2] RUN dotnet publish "./BookingServiceGrpc.csproj" -c Debug -o /app/publish /p:UseAppHost=false
+build        > #14 1.206   Determining projects to restore...
+build        > #14 1.633   All projects are up-to-date for restore.
+build        > #14 2.389   BookingServiceGrpc -> /src/BookingServiceGrpc/bin/Debug/net10.0/BookingServiceGrpc.dll
+build        > #14 2.508   BookingServiceGrpc -> /app/publish/
+build        > #14 DONE 2.9s
+build        > 
+build        > #15 [publish 2/2] RUN dotnet tool install --global dotnet-ef
+build        > #15 4.445 Tools directory '/root/.dotnet/tools' is not currently on the PATH environment variable.
+build        > #15 4.445 If you are using bash, you can add it to your profile by running the following command:
+build        > #15 4.445 
+build        > #15 4.445 cat << \EOF >> ~/.bash_profile
+build        > #15 4.445 # Add .NET Core SDK tools
+build        > #15 4.445 export PATH="$PATH:/root/.dotnet/tools"
+build        > #15 4.445 EOF
+build        > #15 4.445 
+build        > #15 4.445 You can add it to the current session by running the following command:
+build        > #15 4.445 
+build        > #15 4.445 export PATH="$PATH:/root/.dotnet/tools"
+build        > #15 4.445 
+build        > #15 4.445 You can invoke the tool using the following command: dotnet-ef
+build        > #15 4.445 Tool 'dotnet-ef' (version '10.0.5') was successfully installed.
+build        > #15 DONE 4.5s
+build        > 
+build        > #16 [base 2/2] WORKDIR /app
+build        > #16 CACHED
+build        > 
+build        > #17 [final 1/2] WORKDIR /app
+build        > #17 CACHED
+build        > 
+build        > #18 [final 2/2] COPY --from=publish /app/publish .
+build        > #18 CACHED
+build        > 
+build        > #19 exporting to image
+build        > #19 exporting layers done
+build        > #19 exporting manifest sha256:f49d75f9870361304f3af0257377a2d19cec6201dc188184c1bc829c670e7d7e done
+build        > #19 exporting config sha256:cd1fcaffc45666331f3c7f07c6ee60d51d5be1f1ae56df0e370ed602fb89fbee done
+build        > #19 exporting attestation manifest sha256:5444e5020a508dc3d1550924204fc6a799e6a79dc2f1ed4dcba89295ed50e155 0.1s done
+build        > #19 exporting manifest list sha256:6b6786ee6702078357f846ed8bc142f7dd8b3adf38df47545890bd94d6ab624c
+build        > #19 exporting manifest list sha256:6b6786ee6702078357f846ed8bc142f7dd8b3adf38df47545890bd94d6ab624c 0.0s done
+build        > #19 naming to docker.io/library/booking-service-grpc:1.0.0 done
+build        > #19 unpacking to docker.io/library/booking-service-grpc:1.0.0 0.0s done
+build        > #19 DONE 0.2s
+build        finished in 29 s
+
+ PASS  build  

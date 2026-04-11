@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.b.s.name }}
+  name: {{ .Values.b.s.name }}
+spec:
+  replicas: {{ .Values.b.s.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.b.s.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.b.s.name }}
+    spec:
+      containers:
+        - env:
+            - name: DATABASE_HOST
+              value: {{ .Values.b.s.container.env.DATABASE_HOST }}
+            - name: DATABASE_NAME
+              value: {{ .Values.b.s.container.env.DATABASE_NAME }}
+            - name: DATABASE_PASSWORD
+              value: {{ .Values.b.s.container.env.DATABASE_PASSWORD }}
+            - name: DATABASE_PORT
+              value: {{ .Values.b.s.container.env.DATABASE_PORT }}
+            - name: DATABASE_USERNAME
+              value: {{ .Values.b.s.container.env.DATABASE_USERNAME }}
+            - name: HOTEL_HOST
+              value: {{ .Values.b.s.container.env.HOTEL_HOST }}
+            - name: KAFKA_HOST
+              value: {{ .Values.b.s.container.env.KAFKA_HOST }}
+            - name: PROMO_CODE_HOST
+              value: {{ .Values.b.s.container.env.PROMO_CODE_HOST }}
+            - name: REVIEW_HOST
+              value: {{ .Values.b.s.container.env.REVIEW_HOST }}
+            - name: USER_API_HOST
+              value: {{ .Values.b.s.container.env.USER_API_HOST }}
+          name: {{ .Values.b.s.container.name }}
+          image: {{ .Values.b.s.image.name}}:{{ .Values.b.s.image.tag}}
+          ports:
+            - containerPort: {{ .Values.b.s.container.ports.grpc.external }}
+              protocol: TCP
+            - containerPort: {{ .Values.b.s.container.ports.http.external }}
+              protocol: TCP
+      restartPolicy: Always
