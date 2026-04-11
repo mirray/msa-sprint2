@@ -6,6 +6,7 @@ stages:
   - test
   - test-feature
   - deploy
+  - debug
 
 build:
   stage: build
@@ -45,8 +46,14 @@ test-feature:
   script:
     - echo "Start test"
     - docker compose -f ./docker/compose.test.yml -f ./docker/compose.test-feature.yml up -d
+    - curl "http://localhost/ping"
     - curl "http://localhost/feature"
     - docker stop booking-service-test
     - docker stop booking-service-db-test
     - docker rm booking-service-test
     - docker rm booking-service-db-test
+
+debug:
+  stage: debug
+  script:
+    - echo "CWD-$IMAGE_NAME"
