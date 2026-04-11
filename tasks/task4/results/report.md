@@ -3,9 +3,10 @@
 1. booking-service-grpc - working service from task 2
 2. added new entry points for health-check and feature check:
  - GET /ping
- - GET /feature 
+ - GET /feature
 
-3. wsl - installed ubuntu and set to default - to allow build under docker socket with gitlab-ci-local
+3. install gitlab-ci-local
+4. wsl - install ubuntu and set to default - to allow build under docker with gitlab-ci-local
 4. run minikube with docker desktop
 5. setup docker socket in .gitlab-ci.yml
 
@@ -13,7 +14,7 @@
 
 Pros: 
    - fast run
-   - no need additional resources
+   - no need additional resources (memory, CPU)
 
 Cons:
    - some unexpected behavior from time to time
@@ -27,6 +28,7 @@ Pros:
 
 Cons:
  - manual initial setup or long auto-setup before each run
+ - need additional resources to keep daemon alive
 
 6. use helm chart for CI on stage/prod
 7. use kompose to convert from compose.yml to easy helm charts
