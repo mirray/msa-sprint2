@@ -1,12 +1,12 @@
 variables:
-  DOCKER_HOST: "unix:///var/run/docker.sock" # use local docker installation
+  DOCKER_HOST: unix:///var/run/docker.sock # use local docker installation
 
 stages:
   - build
   - test
   - test-feature
   - deploy
-  - debug
+  - checkDNS
 
 build:
   stage: build
@@ -17,10 +17,8 @@ build:
 deploy:
   stage: deploy
   script:
-    - declare -x IMAGE_NAME=$IMAGE_NAME
-    - export
-    - echo $TEST_VAR
-    - echo "Start deploy $IMAGE_NAME:$IMAGE_TAG"
+    #- minikube image load booking-service-grpc:1.0.0
+    - helm install booking-service-grpc booking-service-grpc
 
 test:
   stage: test
@@ -53,7 +51,8 @@ test-feature:
     - docker rm booking-service-test
     - docker rm booking-service-db-test
 
-debug:
-  stage: debug
+checkDNS:
+  stage: checkDNS
   script:
-    - echo "CWD-$IMAGE_NAME"
+    - echo "Check DNS"
+    - docker compose -f ./docker/test/CheckDNS/compose.yml up -d --build
