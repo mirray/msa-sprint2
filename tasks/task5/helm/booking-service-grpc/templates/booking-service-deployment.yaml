@@ -3,16 +3,19 @@ kind: Deployment
 metadata:
   labels:
     app: {{ .Values.b.s.name }}
-  name: {{ .Values.b.s.name }}
+    version: {{ .Chart.AppVersion }}
+  name: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.b.s.replicas }}
   selector:
     matchLabels:
       app: {{ .Values.b.s.name }}
+      version: {{ .Chart.AppVersion }}
   template:
     metadata:
       labels:
         app: {{ .Values.b.s.name }}
+        version: {{ .Chart.AppVersion }}
     spec:
       containers:
         - env:
@@ -37,7 +40,7 @@ spec:
             - name: USER_API_HOST
               value: {{ .Values.b.s.container.env.USER_API_HOST }}
           name: {{ .Values.b.s.container.name }}
-          image: {{ .Values.b.s.image.name}}:{{ .Values.b.s.image.tag}}
+          image: {{ .Values.b.s.image.name}}:{{ .Chart.AppVersion }}
           ports:
             - containerPort: {{ .Values.b.s.container.ports.grpc.external }}
               protocol: TCP

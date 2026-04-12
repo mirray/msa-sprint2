@@ -1,0 +1,51 @@
+variables:
+  DOCKER_HOST: unix:///var/run/docker.sock # use local docker installation
+
+stages:
+  - build
+  - test
+  - test-istio
+  - deploy
+  - deploy-db
+
+
+build:
+  stage: build
+  script:
+    - echo "Run build"
+    - docker build -f ./docker/booking-service-grpc/Dockerfile -t booking-service-grpc:1.1.0 .
+
+deploy:
+  stage: deploy
+  script:
+    #- minikube image load booking-service-grpc:1.0.0
+    - helm install helm/booking-service-grpc booking-service-grpc
+
+deploy-db:
+  stage: deploy-db
+  script: 
+    - helm install booking-service-grpc-db booking-service-grpc-db -n database --create-namespace
+
+test:
+  stage: test
+  variables:
+    POSTGRES_USER: hotelio
+    POSTGRES_PASSWORD: hotelio
+    POSTGRES_DB: db
+  script:
+    - echo "Start test"
+    - docker compose -f ./docker/compose.test.yml up -d
+    - curl "http://localhost/ping"
+    - docker stop booking-service-test
+    - docker stop booking-service-db-test
+    - docker rm booking-service-test
+    - docker rm booking-service-db-test
+ 
+test-istio:
+  stage: test-istio
+  script:
+    - sh ./check-istio.sh
+    - sh ./check-canary.sh
+    #- sh ./check-fallback.sh
+    - sh ./check-feature-flag.sh
+

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 echo "▶️ Проверка установки Istio..."
 kubectl get pods -n istio-system
 

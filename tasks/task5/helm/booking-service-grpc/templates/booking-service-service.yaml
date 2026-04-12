@@ -3,7 +3,8 @@ kind: Service
 metadata:
   labels:
     app: {{ .Values.b.s.name }}
-  name: {{ .Values.b.s.name }}
+    version: {{ .Chart.AppVersion }}
+  name: {{ .Release.Name }}
 spec:
   ports:
     - name: {{ .Values.b.s.container.ports.grpc.name }}
@@ -14,3 +15,4 @@ spec:
       targetPort: {{ .Values.b.s.container.ports.http.external }}
   selector:
     app: {{ .Values.b.s.name }}
+    version: {{ .Chart.AppVersion }}

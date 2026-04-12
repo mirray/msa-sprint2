@@ -1,8 +1,10 @@
-***Setting up Service Mesh***
+***Setting up with Service Mesh***
 
 
-1. First suggestion was to set up Istio over minikube. However, after reading requirements, it was clear that it will be not enough memory allocated in local PC. So for current prototype it was decided to search faster and more resource-efficient solution.
-2. Decision was made - use Linkerd - it's faster and less resource-intensitive solution, it also provides all required features
-
-3. Install Linkerd CLI on wsl
-4. 
+1. Use Istio over minikube, setup injections over default namespace
+2. Create new version of booking-service-grpc (v1.1.0) - it reads header "X-Feature-Enabled" and return result in GET /ping
+3. Extract booking-service-db in new namespace (database) to prevent injecting with Istio
+4. Build and test new version of booking-service-grpc (v1.1.0)
+5. Update helm chart to use version v1.1.0
+6. Install new version of helm chart in new pod (setup metadata:name = release.Name,  image:tag = chart.appVersion, metadata:labels:version = chart.appVersion)
+7. 

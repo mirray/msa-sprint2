@@ -3,7 +3,7 @@ b:
   #booking-service-grpc
   s:
     name: booking-service
-    replicas: 1
+    replicas: 2
     image: 
       name: booking-service-grpc
     container:
@@ -18,7 +18,7 @@ b:
           internal: 80
           external: 8080
       env:
-        DATABASE_HOST: bookingservicegrpc-db.database
+        DATABASE_HOST: bookingservicegrpc-db
         DATABASE_NAME: db
         DATABASE_PASSWORD: hotelio
         DATABASE_PORT: "'5432'"
@@ -42,4 +42,25 @@ b:
           port: 8080
         failureThreshold: 1
         periodSeconds: 10
+  volume:
+    name: bookingservicegrpc-db-data
+    path: /var/lib/postgresql/data
+    resources:
+      requests:
+        storage: 100Mi
+  db:
+    name: bookingservicegrpc-db
+    replicas: 1
+    container:
+      name: bookingservicegrpc-db
+      env:
+        POSTGRES_DB: db
+        POSTGRES_PASSWORD: hotelio
+        POSTGRES_USER: hotelio
+      image: postgres:17
+      ports:
+        psql:
+          name: "'5432'"
+          internal: 5432
+          external: 5432
   

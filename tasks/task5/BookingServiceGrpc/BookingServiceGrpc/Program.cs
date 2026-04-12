@@ -5,6 +5,7 @@ using BookingServiceGrpc.Queries;
 using BookingServiceGrpc.QueryHandlers;
 using BookingServiceGrpc.Services;
 using Confluent.Kafka;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -63,8 +64,6 @@ builder.Services.AddSingleton<Dictionary<Type, IQueryHandler>>(sp =>
 });
 builder.Services.AddSingleton<IRestQueryHandlerProvider, RestQueryHandlerProvider>();
 
-var featureX = bool.TryParse(Environment.GetEnvironmentVariable("ENABLE_FEATURE_X"), out var enableFeatureX) && enableFeatureX;
-
 var app = builder.Build();
 
 
@@ -75,10 +74,7 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<BookingDbContext>();
     db.Database.Migrate();
 }
-app.MapGet("/ping", () => "pong");
-if (featureX)
-{
-    app.MapGet("/feature", () => "Feature X is enabled!");
-}
+app.MapGet("/ping",  ([FromHeader(Name = "X-Feature-Enabled")] string? customHeader) =>  $"pong X-Feature-Enabled: {customHeader}");
+
 
 app.Run();

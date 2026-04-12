@@ -1,0 +1,7 @@
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: booking-service-v2
+  namespace: default
+spec:
+  host: booking-service-grpc-v2
