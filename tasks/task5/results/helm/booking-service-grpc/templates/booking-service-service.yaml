@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.b.s.name }}
+    version: {{ .Chart.AppVersion }}
+  name: {{ .Release.Name }}
+spec:
+  ports:
+    - name: {{ .Values.b.s.container.ports.grpc.name }}
+      port: {{ .Values.b.s.container.ports.grpc.internal }}
+      targetPort: {{ .Values.b.s.container.ports.grpc.external }}
+    - name: {{ .Values.b.s.container.ports.http.name }}
+      port: {{ .Values.b.s.container.ports.http.internal }}
+      targetPort: {{ .Values.b.s.container.ports.http.external }}
+  selector:
+    app: {{ .Values.b.s.name }}
+    version: {{ .Chart.AppVersion }}

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    sidecar.istio.io/inject: "false"
+  labels:
+    app: {{ .Values.b.db.name }}
+  name: {{ .Values.b.db.name }}
+spec:
+  replicas: {{ .Values.b.db.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.b.db.name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.b.db.name }}
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: {{ .Values.b.db.container.env.POSTGRES_DB}}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.b.db.container.env.POSTGRES_PASSWORD}}
+            - name: POSTGRES_USER
+              value: {{ .Values.b.db.container.env.POSTGRES_USER}}
+          image: {{ .Values.b.db.container.image}}
+          livenessProbe:
+            exec:
+              command:
+                - pg_isready -U {{ .Values.b.db.container.env.POSTGRES_USER}} -P {{ .Values.b.db.container.env.POSTGRES_PASSWORD}} -d {{ .Values.b.db.container.env.POSTGRES_DB}}
+            failureThreshold: 5
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+          name: {{ .Values.b.db.container.name }}
+          ports:
+            - containerPort: {{ .Values.b.db.container.ports.psql.internal }}
+              protocol: TCP
+          volumeMounts:
+            - mountPath: {{ .Values.b.volume.path }}
+              name: {{ .Values.b.volume.name }}
+      restartPolicy: Always
+      volumes:
+        - name: {{ .Values.b.volume.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.b.volume.name }}
