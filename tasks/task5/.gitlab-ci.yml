@@ -46,6 +46,6 @@ test-istio:
   script:
     - sh ./check-istio.sh
     - sh ./check-canary.sh
-    #- sh ./check-fallback.sh
+    - sh ./check-fallback.sh
     - sh ./check-feature-flag.sh
 
