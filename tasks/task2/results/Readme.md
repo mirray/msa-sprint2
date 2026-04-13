@@ -33,3 +33,12 @@ Booking Controller будет перенаправлять данные на н�
 ![component_to_be.png](diagram/component_to_be.png)
 
 В данном случае монолит будет выступать единой точкой входа для API.
+
+
+Про ошибки:
+
+При текущей реализации Booking.proto запрос на список бронирований должен иметь user_id
+![allBookings_error_fix.png](restResponses/allBookings_error_fix.png)
+
+Но монолит передает user_id = null и это возвращает ошибку:
+![allBookings_error_NullPointerException.png](restResponses/allBookings_error_NullPointerException.png)
