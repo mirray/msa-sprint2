@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    sidecar.istio.io/inject: "false"
+  labels:
+    app: {{ .Values.b.db.name }}
+  name: {{ .Values.b.db.name }}
+spec:
+  ports:
+    - name: {{ .Values.b.db.container.ports.psql.name }}
+      port: {{ .Values.b.db.container.ports.psql.internal }}
+      targetPort: {{ .Values.b.db.container.ports.psql.external }}
+  selector:
+    app: {{ .Values.b.db.name }}

@@ -2,6 +2,6 @@
   "name": "booking-ci",
   "version": "1.0.0",
   "devDependencies": {
-    "gitlab-ci-local": "^4.36.1"
+    "gitlab-ci-local": "^4.70.1"
   }
 }

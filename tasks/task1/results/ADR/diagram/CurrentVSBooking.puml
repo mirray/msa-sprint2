@@ -1,0 +1,74 @@
+@startuml
+!include <C4/C4_Component>
+LAYOUT_WITH_LEGEND()
+
+System_Boundary(hotelio, "Hotelio Monolith") {
+
+  Container(monolith, "Monolith Application", "Spring Boot", "Legacy app exposing REST endpoints for hotel booking") {
+    
+    Boundary(api, "API layer"){
+        ' Controllers
+        Component(bookingController, "BookingController", "Spring MVC", "/api/bookings")
+        Component(hotelController, "HotelController", "Spring MVC", "/api/hotels")
+        Component(promoController, "PromoCodeController", "Spring MVC", "/api/promos")
+        Component(reviewController, "ReviewController", "Spring MVC", "/api/reviews")
+        Component(userController, "UserController", "Spring MVC", "/api/users")
+    }
+    Boundary(services, "Service Layer"){
+        ' Services
+        Component(bookingService, "BookingService", "Java Service", "Validates and creates bookings")
+        Component(hotelService, "HotelService", "Java Service", "Retrieves hotel details")
+        Component(userService, "UserService", "Java Service", "Validates user status and blacklist")
+        Component(promoService, "PromoCodeService", "Java Service", "Applies discounts and rules")
+        Component(reviewService, "ReviewService", "Java Service", "Manages hotel reviews")
+    }
+    Boundary(db, "Database Layer"){
+        ' DB
+        ComponentDb(postgres, "Monolith DB", "PostgreSQL", "Stores users, hotels, bookings, reviews, promos")
+    }
+    ' Controller-Service relations
+    Rel_D(bookingController, bookingService, "Uses")
+    Rel_D(hotelController, hotelService, "Uses")
+    Rel_D(promoController, promoService, "Uses")
+    Rel_D(reviewController, reviewService, "Uses")
+    Rel_D(userController, userService, "Uses")
+
+    ' Service-Servic
+    Rel_L(bookingService, hotelService, "Calls")
+    Rel_D(bookingService, userService, "Calls")
+    Rel_D(bookingService, promoService, "Calls")
+    Rel_D(bookingService, reviewService, "Calls")
+    Rel_D(promoService, userService, "Calls")
+    
+    ' Service-DB
+    Rel_D(bookingService, postgres, "Reads/Writes")
+    Rel_D(userService, postgres, "Reads")
+    Rel_D(hotelService, postgres, "Reads")
+    Rel_D(promoService, postgres, "Reads")
+    Rel_D(reviewService, postgres, "Reads")
+  }
+}
+System_Boundary(hm, "Hotelio Microservices"){
+    Container_Boundary(hm.b, "Booking Context"){
+        Component(hm.b.c, "Booking Controller")
+        Component(hm.b.s, "Booking Service")
+        ComponentDb(hm.b.db, "Booking DB")
+        BiRel_D(hm.b.s,hm.b.db, "")
+    }
+}
+Container(proxy, "Proxy")
+Rel_D(hm.b.c, hm.b.s, "calls")
+Rel(hm.b.s, hotelController, "")
+Rel(hm.b.s, promoController, "")
+Rel(hm.b.s, reviewController, "")
+Rel(hm.b.s, userController, "")
+
+Person(user, "User", "Interacts with frontend")
+Rel(user, proxy, "Calls")
+Rel(proxy, bookingController, "Uses")
+Rel(proxy, hm.b.c, "Uses")
+Rel(user, hotelController, "Uses")
+Rel(user, promoController, "Uses")
+Rel(user, reviewController, "Uses")
+Rel(user, userController, "Uses")
+@enduml

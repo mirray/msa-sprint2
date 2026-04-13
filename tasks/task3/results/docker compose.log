@@ -1,0 +1,92 @@
+time="2026-04-13T18:49:34+03:00" level=warning msg="C:\\Work\\Marina\\yandex_microservices\\Sprint2\\monolith\\tasks\\task3\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+[+] Building 8.0s (38/38) FINISHED                                                                                                                                                  
+ => [internal] load local bake definitions                                                                                                                                     0.1s
+ => => reading from stdin 1.75kB                                                                                                                                               0.1s
+ => [booking-subgraph internal] load build definition from Dockerfile                                                                                                          0.1s 
+ => => transferring dockerfile: 173B                                                                                                                                           0.0s
+ => [apollo-gateway internal] load build definition from Dockerfile                                                                                                            0.2s 
+ => => transferring dockerfile: 148B                                                                                                                                           0.0s 
+ => [promocode-subgraph internal] load build definition from Dockerfile                                                                                                        0.1s 
+ => => transferring dockerfile: 148B                                                                                                                                           0.0s
+ => [hotel-subgraph internal] load build definition from Dockerfile                                                                                                            0.2s 
+ => => transferring dockerfile: 148B                                                                                                                                           0.0s 
+ => [apollo-gateway internal] load metadata for docker.io/library/node:18                                                                                                      4.5s 
+ => [auth] library/node:pull token for registry-1.docker.io                                                                                                                    0.0s 
+ => [promocode-subgraph internal] load .dockerignore                                                                                                                           0.1s 
+ => => transferring context: 2B                                                                                                                                                0.0s 
+ => [hotel-subgraph internal] load .dockerignore                                                                                                                               0.1s 
+ => => transferring context: 2B                                                                                                                                                0.0s 
+ => [apollo-gateway internal] load .dockerignore                                                                                                                               0.1s 
+ => => transferring context: 2B                                                                                                                                                0.0s 
+ => [booking-subgraph internal] load .dockerignore                                                                                                                             0.1s 
+ => => transferring context: 2B                                                                                                                                                0.0s 
+ => [apollo-gateway 1/5] FROM docker.io/library/node:18@sha256:c6ae79e38498325db67193d391e6ec1d224d96c693a8a4d943498556716d3783                                                0.1s 
+ => => resolve docker.io/library/node:18@sha256:c6ae79e38498325db67193d391e6ec1d224d96c693a8a4d943498556716d3783                                                               0.1s 
+ => [hotel-subgraph internal] load build context                                                                                                                               0.1s 
+ => => transferring context: 361B                                                                                                                                              0.0s 
+ => [promocode-subgraph internal] load build context                                                                                                                           0.1s 
+ => => transferring context: 91B                                                                                                                                               0.0s 
+ => [booking-subgraph internal] load build context                                                                                                                             0.1s 
+ => => transferring context: 125B                                                                                                                                              0.0s 
+ => [apollo-gateway internal] load build context                                                                                                                               0.1s 
+ => => transferring context: 91B                                                                                                                                               0.0s 
+ => CACHED [booking-subgraph 2/5] WORKDIR /app                                                                                                                                 0.0s 
+ => CACHED [hotel-subgraph 3/5] COPY package.json ./                                                                                                                           0.0s 
+ => CACHED [hotel-subgraph 4/5] RUN npm install                                                                                                                                0.0s 
+ => CACHED [hotel-subgraph 5/5] COPY . .                                                                                                                                       0.0s 
+ => CACHED [promocode-subgraph 3/5] COPY package.json ./                                                                                                                       0.0s 
+ => CACHED [promocode-subgraph 4/5] RUN npm install                                                                                                                            0.0s 
+ => CACHED [promocode-subgraph 5/5] COPY . .                                                                                                                                   0.0s 
+ => CACHED [apollo-gateway 3/5] COPY package.json ./                                                                                                                           0.0s 
+ => CACHED [apollo-gateway 4/5] RUN npm install                                                                                                                                0.0s 
+ => CACHED [apollo-gateway 5/5] COPY . .                                                                                                                                       0.0s 
+ => CACHED [booking-subgraph 3/6] COPY package.json ./                                                                                                                         0.0s 
+ => CACHED [booking-subgraph 4/6] COPY booking.proto ./                                                                                                                        0.0s 
+ => CACHED [booking-subgraph 5/6] RUN npm install                                                                                                                              0.0s 
+ => CACHED [booking-subgraph 6/6] COPY . .                                                                                                                                     0.0s 
+ => [hotel-subgraph] exporting to image                                                                                                                                        0.6s 
+ => => exporting layers                                                                                                                                                        0.0s 
+ => => exporting manifest sha256:fcc44d08aa025d0d18e26048c0dbdb1020a198ae74ec6c6004aa473d5fe1dde3                                                                              0.0s 
+ => => exporting config sha256:dd972f34396ea10671ce59bad3e19d0ccd15c63a25838b562880ae35423e8416                                                                                0.0s 
+ => => exporting attestation manifest sha256:d156948dc8fbb73a47b9389e9028e38e13b73094d90851bf119ca29d7b328523                                                                  0.3s 
+ => => exporting manifest list sha256:39cd06dfd0d951574eb67aa4e1be36b327fc0409acf18e38b90e9ea0d2295717                                                                         0.1s 
+ => => naming to docker.io/library/task3-hotel-subgraph:latest                                                                                                                 0.1s 
+ => => unpacking to docker.io/library/task3-hotel-subgraph:latest                                                                                                              0.0s 
+ => [booking-subgraph] exporting to image                                                                                                                                      0.7s 
+ => => exporting layers                                                                                                                                                        0.0s 
+ => => exporting manifest sha256:2e9060db3333f9de5d9f0a18fd29b3c0a6940feec3337a3a3aab6ad3936691f8                                                                              0.0s 
+ => => exporting config sha256:8415af3f9ccbf6262aeabef04cd423e5579e01e45de28ec463f22b14e9cb6df4                                                                                0.0s 
+ => => exporting attestation manifest sha256:ab032e167a86e327b909184f48f7037ecc23e24b0f92d0e8400574d3aa73c085                                                                  0.3s 
+ => => exporting manifest list sha256:32d23083379a7621bd97299b33e67a9b7c3b8e2b9620d16eb4e0e3bc565269d6                                                                         0.1s 
+ => => naming to docker.io/library/task3-booking-subgraph:latest                                                                                                               0.0s 
+ => => unpacking to docker.io/library/task3-booking-subgraph:latest                                                                                                            0.0s 
+ => [apollo-gateway] exporting to image                                                                                                                                        0.7s 
+ => => exporting layers                                                                                                                                                        0.0s 
+ => => exporting manifest sha256:9881aa0be183acea81f71e5385359a97652d7d846b5d458f15a60dd3d818a09c                                                                              0.0s 
+ => => exporting config sha256:5844e2eb1efb171ca9472d8fe1e6cbd880d72ca03527a9459a4bbf9f871527eb                                                                                0.0s 
+ => => exporting attestation manifest sha256:3f63d938d8ceffbee425b6ab8b8aacb9c72a2ce6f8bc4823b52395ff5cb46d85                                                                  0.3s 
+ => => exporting manifest list sha256:2e363a3c16553ae983a4b041212f19d12f1284a191f22d7e0c6a013545f3745b                                                                         0.1s 
+ => => naming to docker.io/library/task3-apollo-gateway:latest                                                                                                                 0.0s 
+ => => unpacking to docker.io/library/task3-apollo-gateway:latest                                                                                                              0.0s 
+ => [promocode-subgraph] exporting to image                                                                                                                                    0.7s 
+ => => exporting layers                                                                                                                                                        0.0s 
+ => => exporting manifest sha256:45b99ad82fce7df927fe8ecf920030786b90e07b72e8b3f9fdd822ce158fafd7                                                                              0.0s 
+ => => exporting config sha256:5668992cdcdf5b0110f05945a19df3dba7d4d83c7b6ed77e68a428a20c56f9c5                                                                                0.0s 
+ => => exporting attestation manifest sha256:2cc2e50704e9fdb815287b2e38dbd7de22850f516c4446781981f3a8197ef914                                                                  0.3s 
+ => => exporting manifest list sha256:684c6838dc7d479fd863fe65606e9c6790a611b71787a22c2a34f07949ef2e98                                                                         0.1s 
+ => => naming to docker.io/library/task3-promocode-subgraph:latest                                                                                                             0.0s 
+ => => unpacking to docker.io/library/task3-promocode-subgraph:latest                                                                                                          0.0s 
+ => [hotel-subgraph] resolving provenance for metadata file                                                                                                                    0.3s 
+ => [booking-subgraph] resolving provenance for metadata file                                                                                                                  0.3s 
+ => [apollo-gateway] resolving provenance for metadata file                                                                                                                    0.1s 
+ => [promocode-subgraph] resolving provenance for metadata file                                                                                                                0.0s 
+[+] Running 8/8                                                                                                                                                                     
+ ✔ booking-subgraph                      Built                                                                                                                                 0.0s 
+ ✔ hotel-subgraph                        Built                                                                                                                                 0.0s 
+ ✔ promocode-subgraph                    Built                                                                                                                                 0.0s 
+ ✔ apollo-gateway                        Built                                                                                                                                 0.0s 
+ ✔ Container task3-booking-subgraph-1    Running                                                                                                                               0.0s 
+ ✔ Container task3-hotel-subgraph-1      Running                                                                                                                               0.0s 
+ ✔ Container task3-promocode-subgraph-1  Running                                                                                                                               0.0s 
+ ✔ Container task3-apollo-gateway-1      Running                                                                                                                               0.0s 
+Attaching to apollo-gateway-1, booking-subgraph-1, hotel-subgraph-1, promocode-subgraph-1

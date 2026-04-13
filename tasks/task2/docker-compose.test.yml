@@ -1,0 +1,29 @@
+services:
+  tester:
+    build:
+      context: ../../test
+      dockerfile: Dockerfile
+    container_name: hotelio-tester
+    networks:
+      - hotelio-net
+    environment:
+      DB_HOST: host.docker.internal
+      DB_PORT: 5432
+      DB_NAME: hotelio
+      DB_USER: hotelio
+      DB_PASSWORD: hotelio
+      BOOKING_DB_HOST: host.docker.internal
+      BOOKING_DB_PORT: 5433
+      BOOKING_DB_NAME: db
+      BOOKING_DB_USER: hotelio
+      BOOKING_DB_PASSWORD: hotelio
+      BOOKING_HISTORY_DB_HOST: host.docker.internal
+      BOOKING_HISTORY_DB_PORT: 5434
+      BOOKING_HISTORY_DB_NAME: db
+      BOOKING_HISTORY_DB_USER: hotelio
+      BOOKING_HISTORY_DB_PASSWORD: hotelio
+      API_URL: http://host.docker.internal:8084
+
+networks:
+  hotelio-net:
+    external: true

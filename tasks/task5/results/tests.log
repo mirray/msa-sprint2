@@ -1,0 +1,120 @@
+test-istio starting shell (test-istio)
+test-istio $ sh ./check-istio.sh
+test-istio > ▶️ Проверка установки Istio...
+test-istio > NAME                                    READY   STATUS    RESTARTS   AGE
+test-istio > istio-egressgateway-7f67df695d-cfqr6    1/1     Running   0          99m
+test-istio > istio-ingressgateway-76768cbcf6-xmlzj   1/1     Running   0          99m
+test-istio > istiod-76d6698857-h9sp7                 1/1     Running   0          99m
+test-istio > ▶️ Проверка Istio инъекции в default namespace...
+test-istio > "enabled"
+test-istio $ sh ./check-canary.sh
+test-istio > ▶️ Checking canary release (90% v1, 10% v2)...
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong X-Feature-Enabled: 
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong X-Feature-Enabled: 
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong X-Feature-Enabled: 
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong X-Feature-Enabled: 
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong X-Feature-Enabled: 
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong X-Feature-Enabled: 
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong X-Feature-Enabled: 
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio > pong
+test-istio $ sh ./check-fallback.sh
+test-istio > ▶️ Testing fallback route...
+test-istio > Fallback route working
+test-istio $ sh ./check-feature-flag.sh
+test-istio > ▶️ Проверка Feature Flag (X-Feature-Enabled: true)...
+test-istio > pong X-Feature-Enabled:
+test-istio finished in 1.6 s
+
+ PASS  test-istio

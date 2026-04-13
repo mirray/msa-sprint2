@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: booking-service-v1
+  namespace: default
+spec:
+  host: booking-service-grpc-v1
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 1 # Max 1 connection to the backend
+      http:
+        http1MaxPendingRequests: 1 # Max 1 pending request
+        maxRequestsPerConnection: 10
+    # OUTLIER DETECTION CONFIGURATION
+    outlierDetection:
+      consecutive5xxErrors: 5        # Eject after 5 consecutive 5xx errors
+      interval: 30s                  # Frequency of analysis
+      baseEjectionTime: 30s          # Minimum time an instance is removed
+      maxEjectionPercent: 50         # Max percentage of pods that can be ejected

@@ -1,0 +1,9 @@
+CONTAINER ID   IMAGE                             COMMAND                  CREATED          STATUS                      PORTS                                         NAMES Watch
+e761c99c6ce4   bookingservicegrpc                "dotnet BookingServi…"   26 minutes ago   Up 24 minutes               0.0.0.0:9090->8081/tcp, [::]:9090->8081/tcp   booking-service
+12d24ec85fc7   bookingservicehistory             "dotnet BookingServi…"   26 minutes ago   Up 24 minutes                                                             booking-history-service
+6fac4be540e2   postgres:17                       "docker-entrypoint.s…"   26 minutes ago   Up 26 minutes               0.0.0.0:5434->5432/tcp, [::]:5434->5432/tcp   booking-history-service-db
+a3c986b0c36e   postgres:17                       "docker-entrypoint.s…"   26 minutes ago   Up 26 minutes               0.0.0.0:5433->5432/tcp, [::]:5433->5432/tcp   booking-service-db
+042ef3bb7e1f   postgres:15                       "docker-entrypoint.s…"   26 minutes ago   Up 26 minutes               0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp   hotelio-db
+f2cf9c524d5c   task2-monolith                    "java -jar app.jar"      26 minutes ago   Up 26 minutes               0.0.0.0:8084->8080/tcp, [::]:8084->8080/tcp   hotelio-monolith
+cf5853b7bdb8   confluentinc/cp-kafka:7.2.1       "/etc/confluent/dock…"   26 minutes ago   Up 26 minutes               0.0.0.0:9092->9092/tcp, [::]:9092->9092/tcp   task2-kafka-1
+8cc8e154d2d6   confluentinc/cp-zookeeper:7.2.1   "/etc/confluent/dock…"   26 minutes ago   Up 26 minutes               0.0.0.0:2181->2181/tcp, [::]:2181->2181/tcp   task2-zookeeper-1

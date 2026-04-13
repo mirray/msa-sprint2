@@ -1,0 +1,29 @@
+@startuml promoCode_Sequence
+!include <C4/C4_Sequence>
+System_Ext(app, "App")
+Component(hm.promo.c, "Promocode Controller")
+Component(hm.promo.s, "Promocode Service")
+Component(hm.user.s, "App User Service") 
+
+
+== Get promocode ==
+Rel(app, hm.promo.c, "getPromoByCode")
+Rel(hm.promo.c, hm.promo.s, "findByCode")
+Rel(hm.promo.s, hm.promo.c, "PromoCode")
+Rel(hm.promo.c, app, "PromoCode")
+
+== Check if valid ==
+
+Rel(app, hm.promo.c, "isPromoValid")
+Rel(hm.promo.c, hm.promo.s, "isPromoValid")
+Rel(hm.promo.s, hm.promo.c, "bool")
+Rel(hm.promo.c, app, "bool")
+
+== Validate promo for user ==
+Rel(app, hm.promo.c, "validate request")
+Rel(hm.promo.c, hm.promo.s, "validate")
+Rel(hm.promo.s, hm.user.s, "getUserStatus")
+Rel(hm.user.s, hm.promo.s, "string")
+Rel(hm.promo.s, hm.promo.c, "bool")
+Rel(hm.promo.c, app, "status code response")
+@enduml

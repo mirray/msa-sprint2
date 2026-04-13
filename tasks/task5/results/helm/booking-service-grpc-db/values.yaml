@@ -1,0 +1,66 @@
+#booking-service-grpc
+b:
+  #booking-service-grpc
+  s:
+    name: booking-service
+    replicas: 2
+    image: 
+      name: booking-service-grpc
+    container:
+      name: booking-service
+      ports:
+        grpc:
+          name: "'9090'" 
+          internal: 9090
+          external: 8081
+        http: 
+          name: "'80'"
+          internal: 80
+          external: 8080
+      env:
+        DATABASE_HOST: bookingservicegrpc-db
+        DATABASE_NAME: db
+        DATABASE_PASSWORD: hotelio
+        DATABASE_PORT: "'5432'"
+        DATABASE_USERNAME: hotelio
+        HOTEL_HOST: http://host.docker.internal:8084/api/hotels/
+        KAFKA_HOST: PLAINTEXT://host.docker.internal:9092
+        PROMO_CODE_HOST: http://host.docker.internal:8084/api/promos/
+        REVIEW_HOST: http://host.docker.internal:8084/api/reviews/
+        USER_API_HOST: http://host.docker.internal:8084/api/users/
+      readinessProbe:
+        enabled: true
+        httpGet:
+          path: /ping
+          port: 8080
+        failureThreshold: 15
+        periodSeconds: 10
+      livenessProbe:
+        enabled: true
+        httpGet:
+          path: /ping
+          port: 8080
+        failureThreshold: 1
+        periodSeconds: 10
+  volume:
+    name: bookingservicegrpc-db-data
+    path: /var/lib/postgresql/data
+    resources:
+      requests:
+        storage: 100Mi
+  db:
+    name: bookingservicegrpc-db
+    replicas: 1
+    container:
+      name: bookingservicegrpc-db
+      env:
+        POSTGRES_DB: db
+        POSTGRES_PASSWORD: hotelio
+        POSTGRES_USER: hotelio
+      image: postgres:17
+      ports:
+        psql:
+          name: "'5432'"
+          internal: 5432
+          external: 5432
+  
