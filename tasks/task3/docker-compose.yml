@@ -3,6 +3,8 @@ version: '3.8'
 services:
   apollo-gateway:
     build: ./gateway
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - "4000:4000"
     depends_on:
@@ -14,6 +16,8 @@ services:
 
   booking-subgraph:
     build: ./booking-subgraph
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - "4001:4001"
     networks:
@@ -21,6 +25,8 @@ services:
 
   hotel-subgraph:
     build: ./hotel-subgraph
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - "4002:4002"
     networks:
@@ -28,6 +34,8 @@ services:
   
   promocode-subgraph:
     build: ./promocode-subgraph
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - "4003:4003"
     networks:
