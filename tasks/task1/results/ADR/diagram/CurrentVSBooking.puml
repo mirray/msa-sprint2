@@ -48,9 +48,25 @@ System_Boundary(hotelio, "Hotelio Monolith") {
     Rel_D(reviewService, postgres, "Reads")
   }
 }
+System_Boundary(hm, "Hotelio Microservices"){
+    Container_Boundary(hm.b, "Booking Context"){
+        Component(hm.b.c, "Booking Controller")
+        Component(hm.b.s, "Booking Service")
+        ComponentDb(hm.b.db, "Booking DB")
+        BiRel_D(hm.b.s,hm.b.db, "")
+    }
+}
+Container(proxy, "Proxy")
+Rel_D(hm.b.c, hm.b.s, "calls")
+Rel(hm.b.s, hotelController, "")
+Rel(hm.b.s, promoController, "")
+Rel(hm.b.s, reviewController, "")
+Rel(hm.b.s, userController, "")
 
 Person(user, "User", "Interacts with frontend")
-Rel(user, bookingController, "Uses")
+Rel(user, proxy, "Calls")
+Rel(proxy, bookingController, "Uses")
+Rel(proxy, hm.b.c, "Uses")
 Rel(user, hotelController, "Uses")
 Rel(user, promoController, "Uses")
 Rel(user, reviewController, "Uses")

@@ -48,8 +48,8 @@ alt Hotel valid
       end ref
       Rel(hm.booking.s, hm.hotel.s, "isHotelOperational")
       Rel(hm.hotel.s, hm.booking.s, "true")
-      Rel(hm.booking.s, hm.hotel.s, "isTrustedHotel")
-      Rel(hm.hotel.s, hm.booking.s, "true")
+      Rel(hm.booking.s, hm.review.s, "isTrustedHotel")
+      Rel(hm.review.s, hm.booking.s, "true")
       Rel(hm.booking.s, hm.hotel.s, "isHotelFullyBooked")
       Rel(hm.hotel.s, hm.booking.s, "false")
 else Hotel is not operational
@@ -59,14 +59,14 @@ else Hotel is not operational
 else Hotel is not trusted
       Rel(hm.booking.s, hm.hotel.s, "isHotelOperational")
       Rel(hm.hotel.s, hm.booking.s, "true")
-      Rel(hm.booking.s, hm.hotel.s, "isTrustedHotel")
-      Rel(hm.hotel.s, hm.booking.s, "false")
+      Rel(hm.booking.s, hm.review.s, "isTrustedHotel")
+      Rel(hm.review.s, hm.booking.s, "false")
       Rel(hm.booking.s, app, "exception")
 else Hotel is fully booked
       Rel(hm.booking.s, hm.hotel.s, "isHotelOperational")
       Rel(hm.hotel.s, hm.booking.s, "true")
-      Rel(hm.booking.s, hm.hotel.s, "isTrustedHotel")
-      Rel(hm.hotel.s, hm.booking.s, "true")
+      Rel(hm.booking.s, hm.review.s, "isTrustedHotel")
+      Rel(hm.review.s, hm.booking.s, "true")
       Rel(hm.booking.s, hm.hotel.s, "isHotelFullyBooked")
       Rel(hm.hotel.s, hm.booking.s, "true")
       Rel(hm.booking.s, app, "exception")

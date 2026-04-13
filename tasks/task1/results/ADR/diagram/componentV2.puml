@@ -12,8 +12,16 @@ System_Boundary(hm, "Hotelio"){
         Component(hm.booking.c, "Booking GraphQL Client")
         Component(hm.booking.s, "Booking Service")
         ComponentDb(hm.booking.db, "Booking Data Base")
+        ComponentDb(hm.booking.db.review, "Review Data Base Replica")
+        ComponentDb(hm.booking.db.hotel, "Hotel Data Base Replica")
+        ComponentDb(hm.booking.db.user, "User Data Base Replica")
+        ComponentDb(hm.booking.db.promo, "Promo Data Base Replica")
         BiRel(hm.booking.c, hm.booking.s, "")
         BiRel(hm.booking.s, hm.booking.db, "")
+        Rel_D(hm.booking.s, hm.booking.db.review, "")
+        Rel_D(hm.booking.s, hm.booking.db.hotel, "")
+        Rel_D(hm.booking.s, hm.booking.db.user, "")
+        Rel_D(hm.booking.s, hm.booking.db.promo, "")
     }
     Container_Boundary(hm.review, "Review Context"){
         Component(hm.review.c, "Review GraphQL Client")
@@ -40,22 +48,31 @@ System_Boundary(hm, "Hotelio"){
         Component(hm.promo.c, "Promocode GraphQL Client")
         Component(hm.promo.s, "Promocode Service")
         ComponentDb(hm.promo.db, "Promocode Data Base")
+        ComponentDb(hm.promo.db.user, "User Data Base Replica")
         BiRel(hm.promo.c, hm.promo.s, "")
-        BiRel(hm.promo.s, hm.promo.db, "")
+        BiRel_D(hm.promo.s, hm.promo.db, "")
+        Rel_D(hm.promo.s, hm.promo.db.user, "")
     }   
-    
-    Rel(hm.booking.s, hm.review.s, "")
-    Rel(hm.booking.s, hm.hotel.s, "")
-    Rel(hm.booking.s, hm.user.s, "")
-    Rel(hm.booking.s, hm.promo.s, "")
-    Rel(hm.promo.s, hm.user.s, "")
-
+    Container_Boundary(hm.sync, "Sync"){
+        ComponentQueue(hm.sync.kafka, "Kafka")
+    }
     Rel_D(app, hm.api.graphQL, "calls")
     Rel_D(hm.api.graphQL, hm.api.smesh, "Calls")
     Rel_D(hm.api.smesh, hm.booking.c, "calls")
     Rel_D(hm.api.smesh, hm.review.c, "calls")
     Rel_D(hm.api.smesh, hm.hotel.c, "calls")
     Rel_D(hm.api.smesh, hm.user.c, "calls")
-    Rel_D(hm.api.smesh, hm.promo.c, "calls")    
+    Rel_D(hm.api.smesh, hm.promo.c, "calls")   
+    
+    Rel_U(hm.sync.kafka, hm.booking.db.promo, "") 
+    Rel_U(hm.sync.kafka, hm.booking.db.review, "")
+    Rel_U(hm.sync.kafka, hm.booking.db.hotel, "") 
+    Rel_U(hm.sync.kafka, hm.booking.db.user, "")
+    Rel_U(hm.sync.kafka, hm.promo.db.user, "")
+
+    Rel_D(hm.review.s, hm.sync.kafka,"")
+    Rel_D(hm.hotel.s, hm.sync.kafka,"")
+    Rel_D(hm.user.s, hm.sync.kafka,"")
+    Rel_D(hm.promo.s, hm.sync.kafka,"")
 }
 @enduml
